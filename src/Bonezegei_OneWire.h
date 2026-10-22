@@ -8,14 +8,21 @@ public:
     explicit Bonezegei_OneWire(uint8_t pin);
 
     void begin();
-    uint8_t reset();
-    void write(uint8_t v);
-    void writeBit(uint8_t v);
-    uint8_t read();
-    uint8_t readBit();
-    void select(const uint8_t rom[8]);
-    void skip();
-    static uint8_t crc8(const uint8_t *addr, uint8_t len);
+
+    // Master API
+    uint8_t masterReset();
+    void masterWriteBit(uint8_t bit);
+    uint8_t masterReadBit();
+    void masterWrite(uint8_t data);
+    uint8_t masterRead();
+
+    // Slave API
+    bool slaveWaitReset(uint32_t timeoutMs = 2000);
+    void slaveSendPresence();
+    void slaveWriteBit(uint8_t bit);
+    uint8_t slaveReadBit();
+    void slaveWrite(uint8_t data);
+    uint8_t slaveRead();
 
 private:
     uint8_t _pin;
